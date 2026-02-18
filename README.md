@@ -2,8 +2,6 @@
 
 A precision solar potential calculator web application tailored for the Indonesian market. Built with the "Eclipse Fluidity" design system.
 
-![SolarRoute Preview](./preview.png)
-
 ## Features
 
 - 🗺️ **Interactive Map Drawing**: Draw your roof polygon directly on satellite imagery
