@@ -1,0 +1,297 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  background-color: #050505;
+  color: #ffffff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply font-body bg-eclipse-900 text-white overflow-hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Custom Leaflet Overrides */
+.leaflet-container {
+  background: #050505 !important;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Satellite Map Styling */
+.leaflet-tile {
+  /* Slightly increase contrast for satellite imagery */
+  filter: contrast(1.1) saturate(1.1) !important;
+}
+
+/* Hide Leaflet controls mostly */
+.leaflet-control-attribution {
+  background: rgba(0,0,0,0.7) !important;
+  color: #888 !important;
+  font-size: 10px !important;
+  padding: 4px 8px !important;
+  border-radius: 4px !important;
+}
+
+.leaflet-control-attribution a {
+  color: #aaa !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505; 
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4B5563;  /* gray-600 - better contrast */
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FF4D00; 
+}
+
+/* Glass Card Base Styles */
+.glass-card {
+  @apply backdrop-blur-xl bg-glass-surface border border-glass-border;
+  box-shadow: 0 0 40px -10px rgba(255, 77, 0, 0.15);
+}
+
+/* Inner border gradient for glass cards (Safari compatible) */
+.inner-border-gradient {
+  background: linear-gradient(180deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0) 100%);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: 
+    linear-gradient(#fff 0 0) content-box, 
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  padding: 1px;
+}
+
+/* Noise Texture Overlay */
+.noise-overlay::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Gradient Text */
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-eclipse-500 to-eclipse-600;
+}
+
+/* Input Styles */
+input[type="range"] {
+  @apply w-full h-2 bg-glass-surface rounded-lg appearance-none cursor-pointer;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  @apply appearance-none w-4 h-4 bg-eclipse-500 rounded-full cursor-pointer;
+  box-shadow: 0 0 10px rgba(255, 77, 0, 0.5);
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  @apply bg-eclipse-600;
+  box-shadow: 0 0 15px rgba(255, 77, 0, 0.7);
+}
+
+input[type="number"],
+input[type="text"] {
+  @apply bg-glass-surface border border-glass-border rounded-lg px-4 py-2 text-white font-mono text-sm;
+  @apply focus:outline-none focus:border-eclipse-500/50 focus:ring-1 focus:ring-eclipse-500/50;
+  @apply transition-all duration-200;
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus {
+  box-shadow: 0 0 20px rgba(255, 77, 0, 0.1);
+}
+
+input[type="number"]:disabled,
+input[type="text"]:disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+/* Polygon Drawing Styles */
+.leaflet-draw-section {
+  @apply hidden;
+}
+
+.leaflet-draw-toolbar {
+  @apply hidden;
+}
+
+/* Custom Marker Styles */
+.polygon-vertex {
+  @apply w-3 h-3 bg-white rounded-full;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8), 0 0 20px rgba(255, 77, 0, 0.5);
+}
+
+/* Animation Keyframes */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(255, 77, 0, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(255, 77, 0, 0.6);
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Tooltip Styles */
+.leaflet-tooltip {
+  @apply bg-eclipse-800 text-white border-glass-border;
+  padding: 4px 8px !important;
+  border-radius: 6px !important;
+  font-size: 12px !important;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 640px) {
+  /* Sidebar adjustments */
+  .fixed.left-2,
+  .fixed.sm\:left-4 {
+    left: 0.5rem !important;
+  }
+  
+  .fixed.w-\[calc\(100vw-1rem\)\] {
+    max-width: calc(100vw - 1rem) !important;
+  }
+  
+  .fixed.sm\:w-\[340px\] {
+    max-width: 320px !important;
+  }
+  
+  /* ResultsHUD adjustments */
+  .fixed.left-2.right-2 {
+    left: 0.5rem !important;
+    right: 0.5rem !important;
+  }
+  
+  .fixed.sm\:right-4 {
+    right: 0.5rem !important;
+  }
+  
+  .fixed.sm\:w-\[360px\],
+  .fixed.lg\:w-\[400px\] {
+    width: calc(100vw - 1rem) !important;
+    max-width: 340px !important;
+  }
+  
+  /* Adjust map controls for mobile - don't scale, use proper sizing */
+  .leaflet-control-container {
+    margin-bottom: 80px;
+  }
+  
+  .leaflet-control-zoom a {
+    width: 44px !important;
+    height: 44px !important;
+    line-height: 44px !important;
+    font-size: 18px !important;
+  }
+  
+  /* Safe area for mobile browsers */
+  .fixed.bottom-2,
+  .fixed.sm\:bottom-4,
+  .fixed.bottom-4,
+  .fixed.bottom-6 {
+    bottom: max(0.5rem, env(safe-area-inset-bottom, 0.5rem)) !important;
+  }
+  
+  /* Hero text scaling for very small screens */
+  .text-5xl {
+    font-size: 2rem !important;
+    line-height: 1.1 !important;
+  }
+  
+  .lg\:text-7xl {
+    font-size: 2.5rem !important;
+  }
+}
+
+/* Tablet specific adjustments */
+@media (min-width: 641px) and (max-width: 1023px) {
+  .fixed.left-2 {
+    left: 1rem !important;
+  }
+  
+  .fixed.sm\:w-\[340px\] {
+    max-width: 340px !important;
+  }
+  
+  /* Prevent overlap on tablet */
+  .fixed.right-4,
+  .fixed.bottom-4 {
+    z-index: 45 !important;
+  }
+}
+
+/* Very small screens (<375px) */
+@media (max-width: 374px) {
+  .text-5xl {
+    font-size: 1.75rem !important;
+  }
+  
+  .lg\:text-7xl {
+    font-size: 2rem !important;
+  }
+  
+  /* Ensure buttons have minimum touch targets */
+  button {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Focus Visible for Accessibility */
+*:focus-visible {
+  outline: 2px solid #FF4D00;
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  @apply outline-none ring-2 ring-eclipse-500 ring-offset-2 ring-offset-eclipse-900;
+}
+
+/* High contrast focus for better visibility */
+button:focus-visible {
+  box-shadow: 0 0 0 2px #050505, 0 0 0 4px #FF4D00;
+}
+
+input:focus-visible {
+  box-shadow: 0 0 0 2px #050505, 0 0 0 4px #FF4D00;
+}
+
+/* Selection Color */
+::selection {
+  background: rgba(255, 77, 0, 0.3);
+  color: white;
+}

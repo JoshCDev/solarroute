@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.venvScriptspython:*)",
+      "Bash(.venvScriptspip list)",
+      "Bash(.venv/Scripts/python:*)",
+      "Bash(curl:*)",
+      "Bash(npm run dev)",
+      "mcp__ide__getDiagnostics"
+    ]
+  }
+}
